@@ -7,8 +7,6 @@
  * Kóðabútar eru innan ``.
  *
  * @see https://jsdoc.app/
- *
- * MITT !!BRANCH
  */
 
 // Til að byrja með skilgreinum við gögn sem við notum í forritinu okkar. Við þurfum að skilgreina
@@ -292,11 +290,33 @@ function showProducts() {
  * @returns undefined
  */
 function addProductToCart() {
-  /* Útfæra */
+  debugger;
+  const productIdAsString = prompt('Auðkenni vöru sem á að bæta við körfu:')
 
-  /* Hér ætti að nota `validateInteger` hjálparfall til að staðfesta gögn frá notanda */
-  
-  /* Til að athuga hvort vara sé til í `cart` þarf að nota `cart.lines.find` */
+  // TODO validatea að þetta sé í raun tala sem er vara og ekki null
+  if (!productIdAsString) {
+    console.error('verður að vera tala')
+    return;
+  }
+
+  const productId = Number.parseInt(productIdAsString);
+  console.log(productId)
+
+  const product = products.find((i) => i.id === productId)
+
+  if (!product) {
+    console.error('vara fannst ekki');
+    return;
+  }
+
+  let productInCart = cart.lines.find((i) => i.product.id === productId);
+
+  if (productInCart) {
+    productInCart.quantity += 1;
+  } else {
+    const newLine = { product, quantity: 1}
+    cart.lines.push(newLine)
+  }
 }
 
 /**
