@@ -7,7 +7,7 @@
  * Kóðabútar eru innan ``.
  *
  * @see https://jsdoc.app/
- * 
+ *
  * MITT !!BRANCH
  */
 
