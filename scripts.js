@@ -7,6 +7,8 @@
  * Kóðabútar eru innan ``.
  *
  * @see https://jsdoc.app/
+ * 
+ * MITT BRANCH
  */
 
 // Til að byrja með skilgreinum við gögn sem við notum í forritinu okkar. Við þurfum að skilgreina
