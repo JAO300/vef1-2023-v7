@@ -7,6 +7,8 @@
  * Kóðabútar eru innan ``.
  *
  * @see https://jsdoc.app/
+ * 
+ * FOO
  */
 
 // Til að byrja með skilgreinum við gögn sem við notum í forritinu okkar. Við þurfum að skilgreina
