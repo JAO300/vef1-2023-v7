@@ -186,7 +186,12 @@ function cartInfo(cart) {
 for (const cartLine of cart.lines){
   karfaInfo += formatProduct(cartLine.product, cartLine.quantity) + '\n';
 }
-  }
+  const total = cart.lines.reduce((acc, cartLine) => {
+    return acc + cartLine.product.price * cartLine.quantity;
+  }, 0);
+  karfaInfo += `Samtals: ${formatPrice(total)}`;
+}
+console.log(karfaInfo);
 }
 
 // --------------------------------------------------------
@@ -304,34 +309,52 @@ function showProducts() {
  * @returns undefined
  */
 function addProductToCart() {
-  debugger;
-  const productIdAsString = prompt('Auðkenni vöru sem á að bæta við körfu:')
-
-  // TODO validatea að þetta sé í raun tala sem er vara og ekki null
-  if (!productIdAsString) {
-    console.error('verður að vera tala')
+ 
+  const varaID = prompt('Sláðu inn auðkenni vöru (ID) :');
+  if (!varaID) {
+    console.error('Auðkenni má ekki vera tómt.');
     return;
   }
 
-  const productId = Number.parseInt(productIdAsString);
-  console.log(productId)
+  const audkenni = Number.parseInt(varaID);
+  if (isNaN(audkenni) || audkenni <= 0) {
+    console.log('Auðkenni vöru er ekki löglegt, verður að vera heiltala ');
+    return;
+  }
 
-  const product = products.find((i) => i.id === productId)
+  if (!validateInteger(audkenni, 0, products.length)) {
+    console.log('Vara fannst ekki.');
+    return;
+  }
 
+  const fjoldiVara = prompt('Hversu mörg eintök viltu bæta við?');
+  if (!fjoldiVara) {
+    console.error('Fjöldi vara má ekki vera tómt.');
+    return;
+  }
+
+  const fjoldi = Number.parseInt(fjoldiVara);
+  if (isNaN(fjoldi) || fjoldi < 1 || fjoldi > 99) {
+    console.log('Fjöldi er ekki löglegur, lágmark 1 og hámark 99.');
+    return;
+  }
+
+  const product = products.find((i) => i.id === audkenni);
   if (!product) {
-    console.error('vara fannst ekki');
+    console.error('Vara fannst ekki.');
     return;
   }
 
-  let productInCart = cart.lines.find((i) => i.product.id === productId);
-
-  if (productInCart) {
-    productInCart.quantity += 1;
+  let varaIKorfu = cart.lines.find((i) => i.product.id === audkenni);
+  if (varaIKorfu) {
+    varaIKorfu.quantity += fjoldi;
   } else {
-    const newLine = { product, quantity: 1}
-    cart.lines.push(newLine)
+    const nyLina = { product, quantity: fjoldi };
+    cart.lines.push(nyLina);
   }
+  console.log('vara bætt við')
 }
+
 
 /**
  * Birta upplýsingar um körfu í console. Ef ekkert er í körfu er „Karfan er tóm.“ birt, annars
