@@ -178,6 +178,15 @@ function formatProduct(product, quantity = undefined) {
  */
 function cartInfo(cart) {
   /* Útfæra */
+  let karfaInfo = '';
+
+  if (cart.lines.length === 0) {
+    karfaInfo = 'Karfan er tóm.';
+  }else {
+for (const cartLine of cart.lines){
+  karfaInfo += formatProduct(cartLine.product, cartLine.quantity) + '\n';
+}
+  }
 }
 
 // --------------------------------------------------------
