@@ -347,6 +347,7 @@ function addProductToCart() {
  */
 function showCart() {
   /* Útfæra */
+  cartInfo(cart)
 }
 
 /**
@@ -369,4 +370,39 @@ function showCart() {
  */
 function checkout() {
   /* Útfæra */
-}
+  if (cart.lines.length === 0) {
+    console.log('Karfan er tóm.');
+    return;
+  }
+
+  
+  const name = prompt('Nafn kaupanda:');
+  const address = prompt('Heimilisfang kaupanda:');
+
+  
+  if (!name || !address) {
+    console.error('Nafn og heimilisfang þurfa að vera fyllt út.');
+    return;
+  }
+
+  
+  const total = cart.lines.reduce((acc, cartLine) => {
+    return acc + cartLine.product.price * cartLine.quantity;
+  }, 0);
+
+  
+  console.log(`Pöntun móttekin ${name}.`);
+  console.log(`Vörur verða sendar á ${address}.`);
+  console.log('Vara:\n');
+  
+  for (const cartLine of cart.lines) {
+    console.log(formatProduct(cartLine.product, cartLine.quantity));
+  }
+  
+  console.log(`Samtals: ${formatPrice(total)}`);
+
+  
+  cart.lines = [];
+  cart.name = null;
+  cart.address = null;
+  }
