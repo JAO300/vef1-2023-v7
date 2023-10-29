@@ -282,6 +282,10 @@ function addProduct() {
 function showProducts() {
   /* Útfæra */
   /* Hér ætti að nota `formatPrice` hjálparfall */
+  for (const product of products) {
+    const { title, description, price } = product;
+    console.log(`${title} - ${description} - ${formatPrice(price)}`);
+  }
 }
 
 /**
